@@ -19,6 +19,7 @@ Fighting
 - 爬虫
 - 安全审计
 - 词法分析
+- 日志分析
   https://deerchao.net/tutorials/regex/regex.htm
   http://www.cnblogs.com/hustskyking/archive/2014/01/18/how-regular-expressions-work.html
 
@@ -84,7 +85,7 @@ const reg1 = /(?!^[0-9]{6,12}$)(?!^[a-z]{6,12}$)(?!^[A-Z]{6,12}$)^[0-9A-Za-z]{6,
 php 是最吼的编程语言，因为同时支持两种风格
 
 风格归风格，在各家引擎实现的时候功能并非完全照着实现了
-比如 javascript 不支持命：原子分组(atomic group)、共用集合(branch reset group)、占有匹配、注释模式、宽松格式模式(free-spacing mode)
+比如 javascript 不支持：原子分组(atomic group)、共用集合(branch reset group)、占有匹配、注释模式、宽松格式模式(free-spacing mode)
 已经进入提案的的特性(新版 chrome 已经支持)：负向断言、命名分组
 
 ```javascript
