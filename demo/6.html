@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSONP安全问题</title>
+    <script src="./jquery.min.js"></script>
+</head>
+
+<body>
+    <script>
+
+        $.ajax({ url: 'http://fighting.com/v1/auth/myInfo', dataType: 'jsonp' })
+            .then(res => document.write(JSON.stringify(res)))
+
+
+
+
+
+
+
+        /*
+        $.ajax({ url: 'http://fighting.com/v1/auth/myInfo', dataType: 'jsonp', crossDomain: false })
+        */
+
+
+
+
+
+
+
+
+
+
+        /*
+            let cb = res => {
+                console.log(JSON.stringify(res))
+            }
+            let s = document.createElement('script')
+            s.crossOrigin = '1'
+            s.src = 'http://fighting.com/v1/auth/myInfo?callback=cb'
+            document.body.appendChild(s)
+        */
+    </script>
+</body>
+
+</html>
