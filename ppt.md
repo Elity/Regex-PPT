@@ -500,3 +500,24 @@ const reg1 = /(?!^\d{6,12}$)(?!^[a-z]{6,12}$)(?!^[A-Z]{6,12}$)^[0-9A-Za-z]{6,12}
 ```
     console.log("Thanks!");
 ```
+
+???
+
+```javascript
+const obj = {
+  [Symbol.iterator]() {
+    const keys = Object.keys(this);
+    const indexKey = Symbol('index');
+    this[indexKey] = 0;
+    return {
+      next: () => ({
+        value: this[keys[this[indexKey]]],
+        done: ++this[indexKey] > keys.length,
+      }),
+    };
+  },
+};
+obj.a = 1;
+obj.b = 2;
+[...obj];
+```
