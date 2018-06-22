@@ -21,9 +21,6 @@ Fighting
 - 词法分析
 - 日志分析
 
-  https://deerchao.net/tutorials/regex/regex.htm
-  http://www.cnblogs.com/hustskyking/archive/2014/01/18/how-regular-expressions-work.html
-
 ---
 
 > 所谓正则表达式，就是一种描述字符串结构模式的形式化表达方法
@@ -31,17 +28,8 @@ Fighting
 
 ???
 
-[《精通正则表达式》京东链接](https://item.jd.com/11070361.html)
-
-回溯 /ab{1,3}bbc/.test('abbbc')
-回溯 1 /".\*"/.test('"abc"de')
-回溯 2 /^\d{1,3}?\d{1,3}$/.test('12345')
-
-## 优先级 /^abc|bcd$/.test("abcd") // 是否为 true
-
-## 符号优先级
-
-![优先级](./images/youxianji.png)
+- [一本书：《精通正则表达式》](https://item.jd.com/11070361.html)
+- [一个网站： REX EGG](https://www.rexegg.com)
 
 ---
 
@@ -67,6 +55,13 @@ Fighting
 - 以'86-'开头时，后面必须是 1 开头的十一位数字
 - 以'其它数字-'开头时，后面必须是 6 位以上数字
 - 纯数字的手机，必须是 1 开头的十一位的纯数字
+
+### 密码强度验证要求
+
+- 必须包含一个数字
+- 必须包含一个小写字母
+- 必须包含一个大写字母
+- 位数为 6-15 位
 
 ---
 
@@ -102,6 +97,23 @@ php 是最吼的编程语言，因为同时支持两种风格
 
 ???
 
+### NFA 其实还分为 传统 NFA、POSIX NFA、DFA、混合引擎
+
+### 测试 NFA 还是 DFA
+
+```javascript
+/nfa|nfa not/.match('nfa not');
+// 匹配到nfa 则是NFA，否则可能是POSIX NFA 或DFA
+```
+
+```javascript
+// NFA性能差演示   配合RegexBuddy演示
+// 时间长则是POSIX NFA 否则是 DFA
+console.time();
+'=TTT====='.match(/T(.+)+T/);
+console.timeEnd();
+```
+
 编译原理、龙书
 
 1.  DFA 对于文本串里的每一个字符只需扫描一次，比较快，但特性较少，不支持捕获与反向引用；NFA 要翻来覆去吃字符、吐字符，速度慢，但是特性丰富，所以反而应用广泛。
@@ -110,14 +122,25 @@ php 是最吼的编程语言，因为同时支持两种风格
 4.  NFA 可能会陷入递归调用的陷阱而表现得性能极差。
 5.  NFA 缺省采用 greedy 量词
 
-```javascript
-// NFA性能差演示   配合RegexBuddy演示
-console.time();
-'=TTT====='.match(/T(.+)+T/);
-console.timeEnd();
-```
+##### 左最长规则 的意思就是把你希望得到的最长的那个表达式写在左边，这样他就会按顺序匹配到我们期望的内容了。
 
 主流的编程语言使用 NFA，mysql、awk 使用 DFA、grep 命令使用混合
+
+---
+
+# 两个函数
+
+--
+
+- String.prototype.match
+- RegExp.prototype.test
+
+???
+
+- String.prototype.split
+- String.prototype.replace
+- String.prototype.search
+- RegExp.prototype.exec
 
 ---
 
@@ -235,7 +258,11 @@ ab|cd
 
 ???
 
-[Mastering Quantifiers](https://www.rexegg.com/regex-quantifiers.html)
+## 优先级 /^abc|bcd$/.test("abcd") // 是否为 true
+
+## 符号优先级
+
+![优先级](./images/youxianji.png)
 
 ---
 
@@ -244,8 +271,8 @@ ab|cd
 ???
 我们大多数前端人员可能知道 Greedy 和 Lazy，但是 Possessive 是个什么鬼？
 （占有匹配是什么？如何使用占有匹配）
-js 下的正则默认是贪婪匹配
-那么如何变为惰性模式
+
+js 下的正则默认是贪婪匹配,那么如何变为惰性模式
 
 ---
 
@@ -392,6 +419,18 @@ re.exec('12!34');
 
 ???
 
+```javascript
+/ab{1,3}bbc/.test('abbbc');
+```
+
+```javascript
+/".\*"/.test('"abc"de');
+```
+
+```javascript
+/^\d{1,3}?\d{1,3}$/.test('12345');
+```
+
 - [示例 1](./images/huisu.png)
 
 - [示例 2](./images/huisu1.png)
@@ -410,6 +449,7 @@ re.exec('12!34');
 --
 
 - 不匹配形如 abba 的字符串
+- 验证一个字符串是否至少包含三个数字
 
 ???
 
@@ -425,8 +465,13 @@ const reg1 = /(?!^\d{6,12}$)(?!^[a-z]{6,12}$)(?!^[A-Z]{6,12}$)^[0-9A-Za-z]{6,12}
 [不匹配 abba 类型 demo](./demo/1.html)
 
 ```javascript
-// 答案
 /^(?!.*(.)(.)\2\1)/;
+```
+
+#### 验证字符串是否至少包含 3 位数字
+
+```javascript
+/(\D*\d){3}/.test('dasdas12');
 ```
 
 ---
