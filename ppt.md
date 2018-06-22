@@ -43,6 +43,7 @@ Fighting
 
 - 匹配手机号
 - 验证密码强度
+- 驼峰转连字符风格
 - 添加千分位分隔符
 - 匹配形如 abba 的字符串
 
@@ -76,7 +77,7 @@ Fighting
 php 是最吼的编程语言，因为同时支持两种风格
 
 风格归风格，在各家引擎实现的时候功能并非完全照着实现了
-比如 javascript 不支持：原子分组(atomic group)、共用集合(branch reset group)、占有匹配、注释模式、宽松格式模式(free-spacing mode)
+比如 javascript 不支持：原子分组(atomic group)、字符类交集(character class intersection)、符类交集(character class subtraction)、共用集合(branch reset group)、占有匹配、注释模式、宽松格式模式(free-spacing mode)
 已经进入提案的的特性(新版 chrome 已经支持)：负向断言、命名分组
 
 ---
@@ -443,6 +444,7 @@ re.exec('12!34');
 
 - 匹配手机号
 - 验证密码强度
+- 驼峰转连字符风格
 - 添加千分位分隔符
 - 匹配形如 abba 的字符串
 
@@ -454,18 +456,22 @@ re.exec('12!34');
 ???
 
 ```javascript
+// 匹配手机号
 /^((?!86-)\d+-\d{6,}|(86-)?1\d{10})$/.test('12456454542');
-
+// 验证密码强度
 const reg = /((?=.*\d)(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])|(?=.*[a-z])(?=.*[AZ]))^[0-9A-Za-z]{6,12}$/;
 const reg1 = /(?!^\d{6,12}$)(?!^[a-z]{6,12}$)(?!^[A-Z]{6,12}$)^[0-9A-Za-z]{6,12}$/;
-
+// 驼峰转连字
+'AsdfsdBsdasadC'.replace(/\B(?=[A-Z])/g, '-').toLowerCase();
+'AsdfsdBsdasadC'.replace(/\B([A-Z])/g, '-$1').toLowerCase();
+// 添加千分位
 '123212312312312'.replace(/(?!^)(?=(\d{3})+$)/g, ',');
 ```
 
 [不匹配 abba 类型 demo](./demo/1.html)
 
 ```javascript
-/^(?!.*(.)(.)\2\1)/;
+/^(?!.*(.)(.)\2\1)/.test('312312abbdewr23423');
 ```
 
 #### 验证字符串是否至少包含 3 位数字
