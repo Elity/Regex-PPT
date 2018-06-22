@@ -204,6 +204,12 @@ ab|cd
 - [\s\S]
 - [^]
 
+### 事实上，ES2018 新增了 dotAll 模式，可以让点号匹配任意字符
+
+```javascript
+/./s.test('\r\n');
+```
+
 ---
 
 .left-column[
