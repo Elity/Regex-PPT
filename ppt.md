@@ -520,4 +520,16 @@ const obj = {
 obj.a = 1;
 obj.b = 2;
 [...obj];
+
+//直接使用生成器，更简单
+
+const testObj = {
+  *[Symbol.iterator]() {
+    const keys = Object.keys(this);
+    let key;
+    while ((key = keys.shift())) {
+      yield this[key];
+    }
+  },
+};
 ```
