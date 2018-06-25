@@ -77,7 +77,7 @@ Fighting
 php 是最吼的编程语言，因为同时支持两种风格
 
 风格归风格，在各家引擎实现的时候功能并非完全照着实现了
-比如 javascript 不支持：原子分组(atomic group)、字符类交集(character class intersection)、符类交集(character class subtraction)、共用集合(branch reset group)、占有匹配、注释模式、宽松格式模式(free-spacing mode)
+比如 javascript 不支持：原子分组(atomic group)、字符类交集(character class intersection)、符类交集(character class subtraction)、共用集合(branch reset group)、占有匹配、注释模式、宽松格式模式(free-spacing mode)、条件语法(Conditional Syntax)
 已经进入提案的的特性(新版 chrome 已经支持)：负向断言、命名分组
 
 ---
@@ -499,37 +499,4 @@ const reg1 = /(?!^\d{6,12}$)(?!^[a-z]{6,12}$)(?!^[A-Z]{6,12}$)^[0-9A-Za-z]{6,12}
 
 ```
     console.log("Thanks!");
-```
-
-???
-
-```javascript
-const obj = {
-  [Symbol.iterator]() {
-    const keys = Object.keys(this);
-    const indexKey = Symbol('index');
-    this[indexKey] = 0;
-    return {
-      next: () => ({
-        value: this[keys[this[indexKey]]],
-        done: ++this[indexKey] > keys.length,
-      }),
-    };
-  },
-};
-obj.a = 1;
-obj.b = 2;
-[...obj];
-
-//直接使用生成器，更简单
-
-const testObj = {
-  *[Symbol.iterator]() {
-    const keys = Object.keys(this);
-    let key;
-    while ((key = keys.shift())) {
-      yield this[key];
-    }
-  },
-};
 ```
